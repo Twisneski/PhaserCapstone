@@ -29,9 +29,9 @@ var numberSeven;
 var bucketTwo;
 var bucketThree;
 var bucketSeven;
-var numberTwoGroup;
 var tempTwo;
 var numberThreeGroup;
+var numberSevenGroup;
 var music;
 
   function create() {
@@ -45,67 +45,74 @@ var music;
     music.loop = true;
     music.play();
     
-    //add number buckets
-    bucketTwo = game.add.sprite(500, 400, 'numberTwo');
-    bucketTwo.scale.setTo(1.5,1.5);
-    bucketThree = game.add.sprite(300, 400, 'numberThree');
-    bucketThree.scale.setTo(1.5,1.5);
-    bucketSeven = game.add.sprite(100, 400, 'numberSeven');
-    bucketSeven.scale.setTo(1.5,1.5);
-    pjmasksGroup = game.add.sprite(0, 500, 'pjmasksGroup')
-    pjmasksGroup.scale.setTo(0.25,0.25); 
-    numberTwoGroup = game.add.physicsGroup();
-        // Group One
-        //  And add 3 sprites to it
-      for (var i = 0; i < 3; i++)
+    
+    
+        // Group Two
+      numberTwoGroup = game.add.group();
+      numberTwoGroup.enableBody = true;
+        //  And add 4 sprites to it
+      for (var i = 0; i < 4; i++)
       {//  Create a new sprite at a random world location
           var randomY = game.rnd.integerInRange(0, 370);
           var randomX = game.rnd.integerInRange(20, 750);
           var tempTwo = numberTwoGroup.create(randomX, randomY, 'numberTwo');
           tempTwo.inputEnabled = true;
-          tempTwo.input.enableDrag(false, true);
-          game.physics.arcade.enable(tempTwo);
+          tempTwo.input.enableDrag(true);
           tempTwo.body.collideWorldBounds = true;
-          // game.physics.arcade.enable(numberTwoGroup);
       }
       //  Group Three
       numberThreeGroup = game.add.group();
-      //  And add 3 sprites to it
-      for (var i = 0; i < 3; i++)
+      numberThreeGroup.enableBody = true;
+      //  And add 4 sprites to it
+      for (var i = 0; i < 4; i++)
       {//  Create a new sprite at a random world location
           var randomY = game.rnd.integerInRange(0, 370);
           var randomX = game.rnd.integerInRange(20, 750);
           var tempThree = numberThreeGroup.create(randomX,randomY, 'numberThree');
           tempThree.inputEnabled = true;
-          tempThree.input.enableDrag(false, true);
+          tempThree.input.enableDrag(true);
+          tempThree.body.collideWorldBounds = true;
       }
       //  Group Seven
-      var numberSevenGroup = game.add.group();
-      //  And add 3 sprites to it
-      for (var i = 0; i < 3; i++)
+      numberSevenGroup = game.add.group();
+      numberSevenGroup.enableBody = true;
+      //  And add 4 sprites to it
+      for (var i = 0; i < 4; i++)
       {//  Create a new sprite at a random world location
           var randomY = game.rnd.integerInRange(0, 370);
           var randomX = game.rnd.integerInRange(20, 750);
           var tempSeven = numberSevenGroup.create(randomX, randomY, 'numberSeven');
           tempSeven.inputEnabled = true;
-          tempSeven.input.enableDrag(false, true);
+          tempSeven.input.enableDrag(true);
+          tempSeven.body.collideWorldBounds = true;
       }
-        numberTwoGroup.enableBody = true;
-        numberThreeGroup.enableBody = true;
-        numberSevenGroup.enableBody = true; 
-        // game.physics.arcade.enable(bucketTwo);
-        console.log(numberTwoGroup);
+
+      //add number buckets
+    bucketTwo = game.add.sprite(500, 400, 'numberTwo');
+    bucketTwo.scale.setTo(1.5,1.5);
+    game.physics.arcade.enable(bucketTwo);
+    bucketThree = game.add.sprite(300, 400, 'numberThree');
+    bucketThree.scale.setTo(1.5,1.5);
+    game.physics.arcade.enable(bucketThree);
+    bucketSeven = game.add.sprite(100, 400, 'numberSeven');
+    bucketSeven.scale.setTo(1.5,1.5);
+    game.physics.arcade.enable(bucketSeven);
+    pjmasksGroup = game.add.sprite(0, 500, 'pjmasksGroup')
+    pjmasksGroup.scale.setTo(0.25,0.25); 
   }
   
 
     function update(){
-
-     game.physics.arcade.collide(tempTwo, bucketTwo, twoCollision);
-     {console.log('collide'); } 
-    }
+    
+     game.physics.arcade.overlap(numberTwoGroup, bucketTwo, twoCollision, null, this);
+     game.physics.arcade.overlap(numberThreeGroup, bucketThree, twoCollision, null, this);
+     game.physics.arcade.overlap(numberSevenGroup, bucketSeven, twoCollision, null, this);
+    
+  }
 
     function twoCollision(bucket, number){
       console.log("collideit?");
+      number.kill();
     }
 
 
